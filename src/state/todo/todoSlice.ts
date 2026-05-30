@@ -18,11 +18,11 @@ const todoSlice = createSlice({
       state.push(action.payload);
     },
     deleteTodo: (state, action) => {
-      console.log("action",action);
+      console.log("action", action);
       return state.filter((todo) => todo.id !== action.payload);
     },
     editTodo: (state, action) => {
-      console.log("action in edit",action);
+      console.log("action in edit", action);
       const { id, title } = action.payload;
       const todo = state.find((todo) => todo.id === id);
       if (todo) {
