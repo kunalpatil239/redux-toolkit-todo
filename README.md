@@ -22,14 +22,12 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     extends: [
       // Other configs...
-
       // Remove tseslint.configs.recommended and replace with this
       tseslint.configs.recommendedTypeChecked,
       // Alternatively, use this for stricter rules
       tseslint.configs.strictTypeChecked,
       // Optionally, add this for stylistic rules
       tseslint.configs.stylisticTypeChecked,
-
       // Other configs...
     ],
     languageOptions: {
@@ -71,3 +69,39 @@ export default defineConfig([
   },
 ])
 ```
+
+## Docker / Podman
+
+### Build
+
+```bash
+# Docker
+docker build -t redux-todo .
+
+# Podman (needs --format docker for HEALTHCHECK support)
+podman build --format docker -t redux-todo .
+```
+
+### Run (foreground)
+
+```bash
+# Docker
+docker run -p 4173:4173 redux-todo
+
+# Podman
+podman run -p 4173:4173 redux-todo
+```
+
+### Run (detached + auto-start on boot)
+
+```bash
+# Docker
+docker run -d --restart unless-stopped -p 4173:4173 redux-todo
+
+# Podman
+podman run -d --restart unless-stopped -p 4173:4173 redux-todo
+```
+
+The app will be available at `http://localhost:4173`.
+
+The `--restart unless-stopped` flag ensures the container starts automatically when the system boots.
