@@ -1,74 +1,33 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This template provides a minimal setup to get React working in Vite with HMR.
 
-Currently, two official plugins are available:
+## Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Script      | Command                   | Description                         |
+| ----------- | ------------------------- | ----------------------------------- |
+| `dev`       | `vite`                    | Start dev server with HMR           |
+| `build`     | `tsc -b && vite build`    | Type-check and build for production |
+| `lint`      | `oxlint`                  | Lint all source files (type-aware)  |
+| `lint:fix`  | `oxlint --fix`            | Lint and auto-fix                   |
+| `fmt`       | `oxfmt`                   | Format all files                    |
+| `fmt:check` | `oxfmt --check`           | Check formatting (CI use)           |
+| `check`     | `oxfmt --check && oxlint` | Run all checks                      |
+| `preview`   | `vite preview`            | Preview production build locally    |
 
-## React Compiler
+## Linting & Formatting
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Oxlint** — linting (82 rules, type-aware via tsgolint)
+- **Oxfmt** — formatting (Prettier-compatible)
 
-## Expanding the ESLint configuration
+## Pre-commit Hooks
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Pre-commit hooks are installed automatically via `pnpm install`. On every commit:
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+1. `oxfmt` formats all staged files
+2. `oxlint --fix` lints and fixes staged `.ts`/`.tsx` files
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
-
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+If any check fails, the commit is blocked.
 
 ## Docker / Podman
 
