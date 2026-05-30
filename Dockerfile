@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Lockfile + manifest first to cache the install layer (rebuilds skip re-download when deps haven't changed)
 COPY pnpm-lock.yaml package.json ./
-RUN pnpm install --frozen-lockfile --ignore-scripts
+RUN pnpm install --frozen-lockfile
 
 # Source files are copied separately so only code changes trigger the build step
 COPY . .
